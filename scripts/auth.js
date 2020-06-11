@@ -1,3 +1,9 @@
+// Connect to FireStore DB and retrieve data from it
+db.collection("guides").get()
+.then((snapshot) => {
+    setupGuides(snapshot.docs)
+})
+
 // Track user authentication status / Listen for auth state changed
 auth.onAuthStateChanged(user => {
     user ? console.log("user logged in", user) : console.log('user logged out')
