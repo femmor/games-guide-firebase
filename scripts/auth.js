@@ -1,5 +1,8 @@
-// Sign Up
+
 const signUpForm = document.querySelector("#signup-form")
+const logout = document.querySelector("#logout")
+
+// Sign Up
 signUpForm.addEventListener('submit', (e) => {
     e.preventDefault()
     // Get user info
@@ -19,3 +22,12 @@ signUpForm.addEventListener('submit', (e) => {
     })
 })
 
+// Log User Out
+logout.addEventListener("click", (e) => {
+    e.preventDefault()
+    // Log out user
+    auth.signOut()
+    .then(() => {
+        console.log("user signed out...")
+    })
+}) 
