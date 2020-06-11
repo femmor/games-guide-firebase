@@ -1,5 +1,6 @@
 
 const signUpForm = document.querySelector("#signup-form")
+const loginForm = document.querySelector("#login-form")
 const logout = document.querySelector("#logout")
 
 // Sign Up
@@ -12,13 +13,14 @@ signUpForm.addEventListener('submit', (e) => {
     // const lastName = signUpForm["last-name"].value
     // const age = signUpForm["age"].value
 
-    // sign up the user
+    // SignUp Logic
     auth.createUserWithEmailAndPassword(email, password)
     .then((cred) => {
         // console.log(cred.user)
+        // clear form and close modal
+        signUpForm.reset()
         const modal = document.querySelector("#modal-signup")
         M.Modal.getInstance(modal).close();
-        signUpForm.reset()
     })
 })
 
@@ -31,3 +33,23 @@ logout.addEventListener("click", (e) => {
         console.log("user signed out...")
     })
 }) 
+
+// Sign User In
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    // get user info
+    const email = loginForm["login-email"].value
+    const password = loginForm["login-password"].value
+
+    // Login Logic
+    auth.signInWithEmailAndPassword(email, password)
+    .then((cred) => {
+        console.log(cred.user)
+        // Clear form and close modal
+        loginForm.reset()
+        const modal = document.querySelector("#modal-login")
+        M.Modal.getInstance(modal).close()
+    })
+    
+})
