@@ -1,3 +1,7 @@
+// Track user authentication status / Listen for auth state changed
+auth.onAuthStateChanged(user => {
+    user ? console.log("user logged in", user) : console.log('user logged out')
+})
 
 const signUpForm = document.querySelector("#signup-form")
 const loginForm = document.querySelector("#login-form")
@@ -29,9 +33,6 @@ logout.addEventListener("click", (e) => {
     e.preventDefault()
     // Log out user
     auth.signOut()
-    .then(() => {
-        console.log("user signed out...")
-    })
 }) 
 
 // Sign User In
@@ -45,7 +46,6 @@ loginForm.addEventListener("submit", (e) => {
     // Login Logic
     auth.signInWithEmailAndPassword(email, password)
     .then((cred) => {
-        console.log(cred.user)
         // Clear form and close modal
         loginForm.reset()
         const modal = document.querySelector("#modal-login")
