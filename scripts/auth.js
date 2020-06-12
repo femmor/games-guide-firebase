@@ -27,9 +27,10 @@ signUpForm.addEventListener('submit', (e) => {
     const password = signUpForm["signup-password"].value
 
     // SignUp Logic
+    // Create & authenticate user
     auth.createUserWithEmailAndPassword(email, password)
     .then((cred) => {
-        // Create user bio in firestore
+        // Create user bio document in firestore
         return db.collection("users").doc(cred.user.uid).set({
             bio: signUpForm["signup-bio"].value,
             firstName: signUpForm["first-name"].value,
