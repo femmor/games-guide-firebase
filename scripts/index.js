@@ -6,6 +6,19 @@ const loggedInLinks = document.querySelectorAll(".logged-in")
 // setup UI
 const setupUi = (user) => {
   if(user) {
+    db.collection("users").doc(user.uid).get()
+      .then(doc => {
+        // accounts info
+        const html = `
+          <div>Logged in as ${user.email}</div>
+          <hr />
+          <div>First Name: ${doc.data().firstName}</div>
+          <div>Last Name: ${doc.data().lastName}</div>
+          <div>Username: ${doc.data().username}</div>
+          <div>Biography: ${doc.data().bio}</div>`
+
+        accountDetails.innerHTML = html
+      })
     // toggle ui elements
     loggedInLinks.forEach(item => {
       item.style.display = "block"

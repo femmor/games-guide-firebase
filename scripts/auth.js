@@ -6,14 +6,12 @@ const accountDetails = document.querySelector(".account-details")
 // Track user authentication status / Listen for auth state changed
 auth.onAuthStateChanged(user => {
     if(user) {
-        // accounts info
-        const html = `<div>Logged in as ${user.email}</div>`
-
-        accountDetails.innerHTML = html
         // Connect to FireStore DB and retrieve data from it
         db.collection("guides").onSnapshot((snapshot) => {
             setupGuides(snapshot.docs)
             setupUi(user)
+        }, err => {
+            console.log(err.message)
         })
     } else {
         setupGuides([])
@@ -31,7 +29,15 @@ signUpForm.addEventListener('submit', (e) => {
     // SignUp Logic
     auth.createUserWithEmailAndPassword(email, password)
     .then((cred) => {
-        // console.log(cred.user)
+        // Create user bio in firestore
+        return db.collection("users").doc(cred.user.uid).set({
+            bio: signUpForm["signup-bio"].value,
+            firstName: signUpForm["first-name"].value,
+            lastName: signUpForm["last-name"].value,
+            username: signUpForm["user-name"].value
+        })
+        
+    }).then(() => {
         // clear form and close modal
         signUpForm.reset()
         const modal = document.querySelector("#modal-signup")
