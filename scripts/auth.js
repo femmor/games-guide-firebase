@@ -1,20 +1,25 @@
-
+const signUpForm = document.querySelector("#signup-form")
+const loginForm = document.querySelector("#login-form")
+const logout = document.querySelector("#logout")
+const accountDetails = document.querySelector(".account-details")
 
 // Track user authentication status / Listen for auth state changed
 auth.onAuthStateChanged(user => {
-    user ? 
+    if(user) {
+        // accounts info
+        const html = `<div>Logged in as ${user.email}</div>`
+
+        accountDetails.innerHTML = html
         // Connect to FireStore DB and retrieve data from it
         db.collection("guides").onSnapshot((snapshot) => {
             setupGuides(snapshot.docs)
             setupUi(user)
         })
-        : setupGuides([])
+    } else {
+        setupGuides([])
         setupUi()
+    }
 })
-
-const signUpForm = document.querySelector("#signup-form")
-const loginForm = document.querySelector("#login-form")
-const logout = document.querySelector("#logout")
 
 // Sign Up
 signUpForm.addEventListener('submit', (e) => {
@@ -57,7 +62,6 @@ loginForm.addEventListener("submit", (e) => {
         const modal = document.querySelector("#modal-login")
         M.Modal.getInstance(modal).close()
     })
-    
 })
 
 // Create Guide
@@ -79,8 +83,8 @@ createGuideForm.addEventListener("submit", (e) => {
         M.Modal.getInstance(modal).close()
     }).catch(e => {
         console.log(e.message)
-    })
-
-    
-    
+    })    
 })
+
+
+// Accounts pop-up functionality
