@@ -61,6 +61,9 @@ signUpForm.addEventListener('submit', (e) => {
         signUpForm.reset()
         const modal = document.querySelector("#modal-signup")
         M.Modal.getInstance(modal).close();
+        signUpForm.querySelector(".error").innerHTML = ""
+    }).catch(error => {
+        signUpForm.querySelector(".error").innerHTML = error.message
     })
 })
 
@@ -88,6 +91,9 @@ loginForm.addEventListener("submit", (e) => {
         const modal = document.querySelector("#modal-login")
         M.Modal.getInstance(modal).close()
         M.toast({html: `Welcome! ${email}`, classes: 'teal'})
+        signUpForm.querySelector(".error").innerHTML = ""
+    }).catch(error => {
+        loginForm.querySelector(".error").innerHTML = error.message
     })
 })
 
