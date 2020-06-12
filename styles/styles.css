@@ -2,6 +2,10 @@
     display: none
 }
 
+.admin {
+    display: none;
+}
+
 .logged-out {
     display: none
 }

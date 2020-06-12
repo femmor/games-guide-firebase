@@ -2,15 +2,21 @@
 const guideList = document.querySelector(".guides")
 const loggedOutLinks = document.querySelectorAll(".logged-out")
 const loggedInLinks = document.querySelectorAll(".logged-in")
+const adminItems = document.querySelectorAll(".admin")
 
 // setup UI
 const setupUi = (user) => {
   if(user) {
+    // check if admin
+    if(user.admin) {
+      adminItems.forEach(item => item.style.display = "block")
+    }
+
+    // accounts info
     db.collection("users").doc(user.uid).get()
       .then(doc => {
-        // accounts info
         const html = `
-          <div>Logged in as ${user.email}</div>
+          <div class="teal darken-4" style="color: white;">Logged in as ${user.admin ? "Admin" : doc.data().username}</div>
           <hr />
           <div>Biography: ${doc.data().bio}</div>
           <div>First Name: ${doc.data().firstName}</div>
@@ -28,6 +34,9 @@ const setupUi = (user) => {
       item.style.display = "none"
     })
   } else {
+    // Hide admin items
+    adminItems.forEach(item => item.style.display = "none")
+
     loggedInLinks.forEach(item => {
       item.style.display = "none"
     })

@@ -8,7 +8,7 @@ adminActions.addEventListener("submit", (e) => {
     addAdminRole({
         email: adminEmail
     }).then((result) => {
-        console.log(result)
+        
     })  
 })
 
@@ -21,10 +21,13 @@ const accountDetails = document.querySelector(".account-details")
 // Track user authentication status / Listen for auth state changed
 auth.onAuthStateChanged(user => {
     if(user) {
+        user.getIdTokenResult().then(idTokenResult => {
+            user.admin = idTokenResult.claims.admin
+            setupUi(user)
+        })
         // Connect to FireStore DB and retrieve data from it
         db.collection("guides").onSnapshot((snapshot) => {
             setupGuides(snapshot.docs)
-            setupUi(user)
         }, err => {
             console.log(err.message)
         })
@@ -66,6 +69,7 @@ logout.addEventListener("click", (e) => {
     e.preventDefault()
     // Log out user
     auth.signOut()
+    M.toast({html: `You have been logged out!`, classes: 'teal'})
 }) 
 
 // Sign User In
@@ -83,6 +87,7 @@ loginForm.addEventListener("submit", (e) => {
         loginForm.reset()
         const modal = document.querySelector("#modal-login")
         M.Modal.getInstance(modal).close()
+        M.toast({html: `Welcome! ${email}`, classes: 'teal'})
     })
 })
 
@@ -103,6 +108,7 @@ createGuideForm.addEventListener("submit", (e) => {
         const modal = document.querySelector("#modal-create")
         createGuideForm.reset()
         M.Modal.getInstance(modal).close()
+        M.toast({html: `Well done! ${title} game guide created successfully`, classes: 'teal'})
     }).catch(e => {
         console.log(e.message)
     })    
