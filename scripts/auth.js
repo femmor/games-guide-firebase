@@ -60,3 +60,28 @@ loginForm.addEventListener("submit", (e) => {
     })
     
 })
+
+// Create Guide
+const createGuideForm = document.querySelector("#create-form")
+createGuideForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    // Get form values
+    const title = createGuideForm["title"].value
+    const content = createGuideForm["content"].value
+
+    db.collection("guides").add({
+        title,
+        content
+    })
+    .then(() => {
+        // close modal and reset form 
+        const modal = document.querySelector("#modal-create")
+        createGuideForm.reset()
+        M.Modal.getInstance(modal).close()
+    }).catch(e => {
+        console.log(e.message)
+    })
+
+    
+    
+})
