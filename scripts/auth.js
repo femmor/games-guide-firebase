@@ -1,3 +1,18 @@
+// Add admin cloud function
+const adminActions = document.querySelector(".admin-actions")
+adminActions.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const adminEmail = document.querySelector("#admin-email").value
+    // Admin Role
+    const addAdminRole = functions.httpsCallable("addAdminRole")
+    addAdminRole({
+        email: adminEmail
+    }).then((result) => {
+        console.log(result)
+    })  
+})
+
+// UI Variables
 const signUpForm = document.querySelector("#signup-form")
 const loginForm = document.querySelector("#login-form")
 const logout = document.querySelector("#logout")

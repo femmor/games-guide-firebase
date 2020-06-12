@@ -11,3 +11,4 @@ var firebaseConfig = {
   // Make Auth and Firestore references
   const auth = firebase.auth()
   const db = firebase.firestore()
+  const functions = firebase.functions()
