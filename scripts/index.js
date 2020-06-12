@@ -1,5 +1,29 @@
 // Get guides container
 const guideList = document.querySelector(".guides")
+const loggedOutLinks = document.querySelectorAll(".logged-out")
+const loggedInLinks = document.querySelectorAll(".logged-in")
+
+// setup UI
+const setupUi = (user) => {
+  if(user) {
+    // toggle ui elements
+    loggedInLinks.forEach(item => {
+      item.style.display = "block"
+    })
+    loggedOutLinks.forEach(item => {
+      item.style.display = "none"
+    })
+  } else {
+    loggedInLinks.forEach(item => {
+      item.style.display = "none"
+    })
+    loggedOutLinks.forEach(item => {
+      item.style.display = "block"
+    })
+  }
+}
+
+
 // Setup guides
 const setupGuides = (data) => {
   if(data.length > 0) {
@@ -22,6 +46,7 @@ const setupGuides = (data) => {
     guideList.innerHTML = `<h5 class="center-align">Please login to see guides</h5>`
   } 
 }
+
 
 
 // setup materialize components

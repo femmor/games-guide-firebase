@@ -7,8 +7,10 @@ auth.onAuthStateChanged(user => {
         db.collection("guides").get()
         .then((snapshot) => {
             setupGuides(snapshot.docs)
+            setupUi(user)
         })
         : setupGuides([])
+        setupUi()
 })
 
 const signUpForm = document.querySelector("#signup-form")
