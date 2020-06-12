@@ -4,8 +4,7 @@
 auth.onAuthStateChanged(user => {
     user ? 
         // Connect to FireStore DB and retrieve data from it
-        db.collection("guides").get()
-        .then((snapshot) => {
+        db.collection("guides").onSnapshot((snapshot) => {
             setupGuides(snapshot.docs)
             setupUi(user)
         })
