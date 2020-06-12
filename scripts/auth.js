@@ -1,12 +1,14 @@
-// Connect to FireStore DB and retrieve data from it
-db.collection("guides").get()
-.then((snapshot) => {
-    setupGuides(snapshot.docs)
-})
+
 
 // Track user authentication status / Listen for auth state changed
 auth.onAuthStateChanged(user => {
-    user ? console.log("user logged in", user) : console.log('user logged out')
+    user ? 
+        // Connect to FireStore DB and retrieve data from it
+        db.collection("guides").get()
+        .then((snapshot) => {
+            setupGuides(snapshot.docs)
+        })
+        : setupGuides([])
 })
 
 const signUpForm = document.querySelector("#signup-form")
@@ -19,9 +21,6 @@ signUpForm.addEventListener('submit', (e) => {
     // Get user info
     const email = signUpForm["signup-email"].value
     const password = signUpForm["signup-password"].value
-    // const firstName = signUpForm["first-name"].value
-    // const lastName = signUpForm["last-name"].value
-    // const age = signUpForm["age"].value
 
     // SignUp Logic
     auth.createUserWithEmailAndPassword(email, password)
